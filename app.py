@@ -8,7 +8,7 @@ for route in activeRoutes:
     m = import_module(f'modules.{route}.index')
     app.register_blueprint(m.app)
 
-@app.route('/statoc/<path:path>')
+@app.route('/static/<path:path>')
 def send_report(path):
     return send_from_directory('static', path)
 app.run(host='0.0.0.0', port=8080)
