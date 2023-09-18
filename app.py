@@ -1,8 +1,12 @@
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template, send_from_directory, session
+from dotenv import load_dotenv
+import os
+load_dotenv()
 app = Flask(__name__)
-activeRoutes=['index', 'test']
+app.secret_key = os.getenv('flasksession')
+activeRoutes=['index', 'account']
 from importlib import import_module
-
+from datetime import timedelta
 for route in activeRoutes:
     print(route)
     m = import_module(f'modules.{route}.index')
