@@ -1,4 +1,106 @@
 
+<div class="modal top fade " id="login" tabindex="-1" aria-labelledby="Login Modal" aria-hidden="true" data-bs-theme="light" data-bs-keyboard="true">
+  <div class="modal-dialog modal-xl  modal-dialog-centered">
+    <div class="modal-content bg-secondary bg-gradient">
+      <div class="modal-header">
+        <h5 class="modal-title" id="Login Modal">Login</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Error Message -->
+        <div class="alert alert-danger" role="alert" id="loginError" style="display: none;" hidden='true'>
+          <h4 class="alert-heading">Error</h4>
+          <p id="loginErrorMessage"></p>
+        </div>
+        <!-- Login Form -->
+        <form action="/login" method="post" id="loginForm">
+        <input hidden value="{{ request.path }}" name="redirect" id="redirectlogin">
+        <div class="container py-5 h-100" >
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+      
+                  <div class="form-outline mb-4">
+                    <input type="username" id="typeUserX-2" name="username" class="form-control form-control-lg" required placeholder="Your Username"/>
+                    <label class="form-label" for="typeEmailX-2">Username</label>
+                  </div>
+                  <div class="form-outline mb-4">
+                    <input type="password" id="typePasswordX-2" name='password' class="form-control form-control-lg" required placeholder="Your Password"/>
+                    <label class="form-label" for="typePasswordX-2">Password</label>
+                  </div>
+                  
+                  <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+      
+      
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+      </div>
+      </div>
+      </div>
+
+      <!-- Signup Modal -->
+<div class="modal fade" id="signupModal" name="signupModal" data-bs-target="#signup" tabindex="-1" aria-labelledby="SignupModalLabel" data-remote="localhost:8080" data-bs-theme="light" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content bg-secondary bg-gradient">
+          <div class="modal-header">
+              <h5 class="modal-title" id="SignupModalLabel">Signup</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form id="signupForm">
+                <div class="container py-5 h-90" >
+                  <div class="row d-flex justify-content-center align-items-center h-90">
+                    <div class="col-12 col-md-10 col-lg-8 col-xl-7">
+                      <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+                <input hidden value="{{ request.path }}" name="redirect">
+                  <div class="form-outline mb-4">
+                      <input type="text" id="signupUsername" name="username" class="form-control form-control-lg" required placeholder="John12345"/>
+                      <label class="form-label" for="signupUsername">Username</label>
+                  </div>
+                  <div class="form-outline mb-4">
+                      <input type="password" id="signupPassword" name="password" class="form-control form-control-lg" required placeholder="J0$N!2$45P@$$W0RD"/>
+                      <label class="form-label" for="signupPassword">Password</label>
+                  </div>
+                  <div class="form-outline mb-4">
+                      <input type="text" id="signupFirstName" name="firstName" class="form-control form-control-lg" placeholder="John" />
+                      <label class="form-label" for="signupFirstName">First Name (Optional)</label>
+                  </div>
+                  <div class="form-outline mb-4">
+                      <input type="text" id="signupLastName" name="lastName" class="form-control form-control-lg" placeholder="Doe" />
+                      <label class="form-label" for="signupLastName">Last Name (Optional)</label>
+                  </div>
+                  <div class="form-outline mb-4">
+                      <input type="tel" id="signupPhoneNumber" name="phoneNumber" class="form-control form-control-lg" placeholder="Phone Number" />
+                      <label class="form-label" for="signupPhoneNumber">Phone Number (Optional)</label>
+                  </div>
+                  <button class="btn btn-success btn-lg btn-block" type="submit">Signup</button>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                  
+              </form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light" data-bs-theme="light">
     <div class="container-fluid">
       <a class="navbar-brand" style="font-family: 'Montserrat', sans-serif;" href="/"><img src="/static/icon.png" width="25px" heigth="25px"></a>
@@ -19,14 +121,17 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
-              <li><a class="dropdown-item" href="/configuration">Configuration</a></li>
+              <li><a class="dropdown-item" href="/account">Account</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="/logout">Logout</a></li>
             </ul>
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/signup">Signup</a>
+            <button class="nav-link active btn btn-primary text-bg-secondary" data-bs-toggle="modal" data-bs-target="#login" href="#login">Login</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link active btn btn-primary text-bg-Primary" data-bs-toggle="modal" data-bs-target="#signupModal" href="#signupModal">Signup</button>
           </li>
           {% endif %}
         </ul>

@@ -5,6 +5,7 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv('flasksession')
 activeRoutes=['index', 'account']
+
 from importlib import import_module
 from datetime import timedelta
 for route in activeRoutes:
