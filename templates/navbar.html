@@ -58,6 +58,12 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
+              <!-- Error Message -->
+              <div class="alert alert-danger" role="alert" id="signupError" style="display: none;" hidden='true'>
+                <h4 class="alert-heading">Error</h4>
+                <p id="signupErrorMessage"></p>
+              </div>
+              <!-- Login Form -->
               <form id="signupForm">
                 <div class="container py-5 h-90" >
                   <div class="row d-flex justify-content-center align-items-center h-90">
@@ -66,11 +72,11 @@
                         <div class="card-body p-5 text-center">
                 <input hidden value="{{ request.path }}" name="redirect">
                   <div class="form-outline mb-4">
-                      <input type="text" id="signupUsername" name="username" class="form-control form-control-lg" required placeholder="John12345"/>
+                      <input type="text" id="signupUsername" name="username" minlength="5" maxlength="64" class="form-control form-control-lg" required placeholder="John12345"/>
                       <label class="form-label" for="signupUsername">Username</label>
                   </div>
                   <div class="form-outline mb-4">
-                      <input type="password" id="signupPassword" name="password" class="form-control form-control-lg" required placeholder="J0$N!2$45P@$$W0RD"/>
+                      <input type="password" id="signupPassword" minlength='8' maxlength="255" name="password" class="form-control form-control-lg" required placeholder="J0$N!2$45P@$$W0RD"/>
                       <label class="form-label" for="signupPassword">Password</label>
                   </div>
                   <div class="form-outline mb-4">
@@ -117,7 +123,7 @@
           {% if user %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{ user }}
+              {{ session['user'] }}
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>

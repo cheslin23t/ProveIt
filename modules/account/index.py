@@ -1,23 +1,17 @@
 from flask import render_template, Blueprint, session, redirect, request
-from ..database.index import mydb
+from ..utils.database import mydb
+from ..utils.error import makeResponseJSON
 import hashlib
 import json
 from datetime import datetime as Datetime
-mycursor = mydb.cursor()
+mycursor = mydb.cursor(dictionary=True)
 app = Blueprint('account', __name__, template_folder='../../templates')
-def makeResponseJSON(success, message="Request processed successfully.", data={}):
-    response = {
-    "success": success,  # Indicates whether the operation was successful
-    "message": message,  # A human-readable message
-    "data": data
-    }
-    return response
-def redirect_with_error(error_message, errorcode=302):
-    return redirect("/error?message=" + error_message, errorcode)
+
 
 @app.route('/login', methods=['POST'])
 def loginRoute():
     try:
+        print('test')
         if 'user' in session:
             return redirect('/')
         print(request.headers)
@@ -28,12 +22,12 @@ def loginRoute():
 
         if mycursor.fetchone():
             session['user'] = username
-            return makeResponseJSON(True), 200
+            return makeResponseJSON(True, 200)
         else:
-            return makeResponseJSON(False, "Incorrect username or password."), 401
+            return makeResponseJSON(False, "Incorrect username or password.", 401)
     except Exception as e:
         print(e)
-        return makeResponseJSON(False, str(e)), 500
+        return makeResponseJSON(False, str(e), 500)
 @app.route('/signup', methods=["POST"])
 def signupRoute():
     try:
@@ -59,36 +53,28 @@ def signupRoute():
 
            # Checks
             if len(passwordUnhashed) < 8:
-                errorMsg = "Password is less than eight characters."
+                errorMsg = ("Password is less than eight characters.", 400,)
             if len(username) < 5:
-                errorMsg = "Username is less than five characters."
+                errorMsg = ("Username is less than five characters.",400,)
             mycursor.execute("SELECT * FROM Users WHERE Username = %s", (username,))
             if mycursor.fetchone():
-               errorMsg = "Account with this username already exists."
-        
+               errorMsg = ("Account with this username already exists.", 409,)
         
             if errorMsg:
-                return makeResponseJSON(False, errorMsg), 400
+                return makeResponseJSON(False, errorMsg[0], errorMsg[1])
         
             # Inserting into database
 
             mycursor.execute("INSERT INTO Users (Username, Password, FirstName, LastName, Phone, RegistrationDate) VALUES (%s, %s, %s, %s, %s, %s)", (username, passwordHashed, firstName, lastName, phoneNumber, Datetime.now()))
             mydb.commit()
             session['user'] = username
-            return makeResponseJSON(True), 200
+            return makeResponseJSON(True, 200)
         else:
-            return makeResponseJSON(False, "No username provided."), 400
+            return makeResponseJSON(False, "No username provided.", 400)
     except Exception as e:
         print(e)
-        return makeResponseJSON(False, str(e)), 500
+        return makeResponseJSON(False, str(e), 500)
 
-
-@app.route('/account', methods=['GET'])
-def accountRoute():
-    if 'user' in session:
-        return render_template('account.html', user=session.get('user'))
-    else:
-        return redirect('/#login?redirect=' + request.path)
 @app.route('/logout')
 def logoutRoute():
     del session['user']

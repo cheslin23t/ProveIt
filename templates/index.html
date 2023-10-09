@@ -31,7 +31,7 @@
     <h2>A simple, yet powerful tool for completing your tasks.</h2>
     <br>
     <br>
-    <a href="/dash">
+    <a href="/{% if user %}dashboard{% else %}?promptLogin=1{% endif %}">
     <button class="btn btn-secondary dash">{% if user %}Dashboard{% else %}Sign Up{% endif %}</button>
     </a>
 </center>
