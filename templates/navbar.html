@@ -1,4 +1,11 @@
-
+<style>
+  .account-profile {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+</style>
 <div class="modal top fade " id="login" tabindex="-1" aria-labelledby="Login Modal" aria-hidden="true" data-bs-theme="light" data-bs-keyboard="true">
   <div class="modal-dialog modal-xl  modal-dialog-centered">
     <div class="modal-content bg-secondary bg-gradient">
@@ -124,6 +131,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               {{ session['user'] }}
+              <img src="{{ user.ProfileImageURL }}" alt="" class="account-profile" alt="">
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
