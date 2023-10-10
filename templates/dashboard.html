@@ -1523,8 +1523,8 @@
             <div class="list-group" id="assignList">
               {% for assign in users %}
               <a class="list-group-item list-group-item-action" id='assign{{ assign["UserID"]}}' style="user-select: none;"
-                aria-current="true" onclick=`let uid = '{{ assign["UserID"]}}'; assignClick(Number(uid))`>
-                <img src='{{ assign["profileImageURL"]}}' style="user-select: none;" class="user-img">
+                aria-current="true" onclick="```"let uid = '{{ assign["UserID"]}}'; assignClick(Number(uid))">
+                <img src='{{ assign["ProfileImageURL"]}}' style="user-select: none;" class="user-img">
                 <div class="username">{{ session['user'] }}</div>
               </a>
               {% endfor %}

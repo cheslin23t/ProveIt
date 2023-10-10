@@ -13,8 +13,9 @@ def accountRoute():
         mycursor.execute("SELECT * FROM Users WHERE Username = %s", (session['user'],))
         result = mycursor.fetchone()
         if result:
-            print(result)
-            return render_template('dashboard.html', user=result)
+            mycursor.execute("SELECT * FROM Users")
+            result2 = mycursor.fetchall()
+            return render_template('dashboard.html', user=result, users=result2)
         else:
             return makeResponseJSON(False, "Session and database username mismatch.", 500)
     else:
