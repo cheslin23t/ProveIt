@@ -15,7 +15,7 @@ def accountRoute():
         if result:
             mycursor.execute("SELECT * FROM Users")
             result2 = mycursor.fetchall()
-            return render_template('dashboard.html', user=result, users=result2)
+            return render_template('dashboard.html', user=result, users=result2, )
         else:
             return makeResponseJSON(False, "Session and database username mismatch.", 500)
     else:
